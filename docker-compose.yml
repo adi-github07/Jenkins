@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  java-app:
+    build:
+      context: .
+    ports:
+      - '9000:8080'
+    networks:
+      - app-networks
+    depends_on:
+      - mysql-db
+
+  mysql-db:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword 
+      MYSQL_USER: springstudent
+      MYSQL_DATABASE: expenses_tracker
+      MYSQL_PASSWORD: springstudent
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - app-networks
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+networks:
+  app-networks:
+volumes:
+  mysql_data:
+
+
