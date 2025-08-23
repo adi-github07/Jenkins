@@ -5,7 +5,7 @@ services:
     build:
       context: .
     ports:
-      - '9000:8080'
+      - '7000:8080'
     networks:
       - app-networks
     depends_on:
